@@ -8,7 +8,7 @@ const Statistics = () => {
     const [selectedMonth,setSelectedMonth] = useState('June')
    useEffect(() => {
     const FetchStatistics = async() => {
-        const response = await axios.get(`http://localhost:3000/statistics?&month=${selectedMonth}`)
+        const response = await axios.get(`https://roxiler-assignment-backend.onrender.com/statistics?&month=${selectedMonth}`)
         setData(response.data)
 
     }
@@ -21,7 +21,7 @@ const Statistics = () => {
     <div className='statistics-con'>
         
       <div className='heading-dropdown-con'>
-      <h1>Statistics - {selectedMonth}</h1>
+      <h1>Statistics</h1>
       <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)} className='dropdown'>
         <option value="">All</option>
         <option value="1">January</option>

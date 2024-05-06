@@ -3,7 +3,9 @@
 .transactions-container {
     margin: 50px;
   }
-  
+  .transactions-container h1{
+    background-color: aquamarine;
+  }
   .transactions-table {
     width: 100%;
     border-collapse: collapse;
@@ -74,4 +76,10 @@
     width: 50px;
     border-radius: 5px;
     background-color: antiquewhite;
+  }
+  .select-options{
+    width: 100px;
+    border-radius: 5px;
+    text-align: center;
+    margin-left: 5px;
   }

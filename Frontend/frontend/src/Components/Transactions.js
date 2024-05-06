@@ -12,7 +12,7 @@ const Transactions = () => {
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/transactions?page=${currentPage}&perPage=${perPage}&search=${searchTerm}&month=${selectedMonth}`
+          `https://roxiler-assignment-backend.onrender.com/transactions?page=${currentPage}&perPage=${perPage}&search=${searchTerm}&month=${selectedMonth}`
         );
         if (response.ok) {
           const data = await response.json();
@@ -47,7 +47,7 @@ const Transactions = () => {
       />
        <div>
        <label>Select Month:</label>
-      <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
+      <select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)} className="select-options">
         <option value="">All</option>
         <option value="1">January</option>
         <option value="2">February</option>

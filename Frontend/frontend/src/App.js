@@ -1,5 +1,5 @@
 import "./App.css";
-import ChartExample from "./Components/Barchart";
+import Barchart from "./Components/Barchart";
 import Statistics from "./Components/Statistics";
 import Transactions from "./Components/Transactions";
 
@@ -9,7 +9,7 @@ function App() {
     <div className="App">
       <Transactions/>
       <Statistics/>
-      <ChartExample/>
+      <Barchart/>
     </div>
   );
 }
