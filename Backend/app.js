@@ -102,7 +102,7 @@ app.get("/statistics", async (req, res) => {
     const [totalSaleAmount] = await connection.query(
       `
       SELECT SUM(price) AS totalSaleAmount
-      FROM products
+      FROM defaultdb
       WHERE MONTH(dateOfSale) = ?
     `,
       [month]
@@ -111,7 +111,7 @@ app.get("/statistics", async (req, res) => {
     const [totalSoldItems] = await connection.query(
       `
       SELECT COUNT(*) AS totalSoldItems
-      FROM products
+      FROM defaultdb
       WHERE MONTH(dateOfSale) = ? AND sold = true
     `,
       [month]
@@ -120,7 +120,7 @@ app.get("/statistics", async (req, res) => {
     const [totalNotSoldItems] = await connection.query(
       `
       SELECT COUNT(*) AS totalNotSoldItems
-      FROM products
+      FROM defaultdb
       WHERE MONTH(dateOfSale) = ? AND sold = false
     `,
       [month]
@@ -158,7 +158,7 @@ app.get("/bar-chart", async (req, res) => {
           ELSE '901 - above'
         END AS priceRange,
         COUNT(*) AS itemCount
-      FROM products
+      FROM defaultdb
       WHERE MONTH(dateOfSale) = ?
       GROUP BY priceRange
     `,
@@ -171,29 +171,6 @@ app.get("/bar-chart", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch bar chart data." });
   }
 });
-
-// Pie Chart API
-app.get("/pie-chart", async (req, res) => {
-  const { month } = req.query;
-
-  try {
-    const [results] = await connection.query(
-      `
-      SELECT category, COUNT(*) AS itemCount
-      FROM products
-      WHERE MONTH(dateOfSale) = ?
-      GROUP BY category
-    `,
-      [month]
-    );
-
-    res.status(200).json(results);
-  } catch (error) {
-    console.error("Error fetching pie chart data:", error);
-    res.status(500).json({ error: "Failed to fetch pie chart data." });
-  }
-});
-
 
 
 app.listen(port, () => {
