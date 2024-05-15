@@ -33,7 +33,7 @@ app.get("/initialize-database", async (req, res) => {
       "CREATE TABLE IF NOT EXISTS products (id INT AUTO_INCREMENT PRIMARY KEY, title VARCHAR(255), price DECIMAL(10, 2), description TEXT, category VARCHAR(255), image VARCHAR(255), sold BOOLEAN, dateOfSale DATETIME)"
     );
 
-
+    // Insert seed data into products table
     for (const item of data) {
       await connection.query(
         "INSERT INTO products (title, price, description, category, image, sold, dateOfSale) VALUES (?, ?, ?, ?, ?, ?, ?)",
@@ -61,7 +61,7 @@ app.get("/initialize-database", async (req, res) => {
 
 app.get("/transactions", async (req, res) => {
   const { page = 1, perPage = 10, search, month } = req.query;
-  const offset = (page - 1) * perPage; 
+  const offset = (page - 1) * perPage; // Calculate offset based on page number and perPage
 
   let whereClause = "";
   let params = [];
@@ -83,7 +83,7 @@ app.get("/transactions", async (req, res) => {
       WHERE 1=1 ${whereClause} ${monthCondition}
       LIMIT ?, ?
     `,
-      [...params, offset, parseInt(perPage)] 
+      [...params, offset, parseInt(perPage)] // Parse perPage as integer
     );
 
     res.status(200).json(results);
@@ -171,6 +171,29 @@ app.get("/bar-chart", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch bar chart data." });
   }
 });
+
+// Pie Chart API
+app.get("/pie-chart", async (req, res) => {
+  const { month } = req.query;
+
+  try {
+    const [results] = await connection.query(
+      `
+      SELECT category, COUNT(*) AS itemCount
+      FROM products
+      WHERE MONTH(dateOfSale) = ?
+      GROUP BY category
+    `,
+      [month]
+    );
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.error("Error fetching pie chart data:", error);
+    res.status(500).json({ error: "Failed to fetch pie chart data." });
+  }
+});
+
 
 
 app.listen(port, () => {
