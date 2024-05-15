@@ -5,7 +5,7 @@ import '../Components/Statistics.css'
 
 const Statistics = () => {
     const [data,setData] = useState([])
-    const [selectedMonth,setSelectedMonth] = useState('June')
+    const [selectedMonth,setSelectedMonth] = useState('1')
    useEffect(() => {
     const FetchStatistics = async() => {
         const response = await axios.get(`https://roxiler-assignment-backend.onrender.com/statistics?&month=${selectedMonth}`)
