@@ -172,29 +172,6 @@ app.get("/bar-chart", async (req, res) => {
   }
 });
 
-// Pie Chart API
-app.get("/pie-chart", async (req, res) => {
-  const { month } = req.query;
-
-  try {
-    const [results] = await connection.query(
-      `
-      SELECT category, COUNT(*) AS itemCount
-      FROM products
-      WHERE MONTH(dateOfSale) = ?
-      GROUP BY category
-    `,
-      [month]
-    );
-
-    res.status(200).json(results);
-  } catch (error) {
-    console.error("Error fetching pie chart data:", error);
-    res.status(500).json({ error: "Failed to fetch pie chart data." });
-  }
-});
-
-
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
