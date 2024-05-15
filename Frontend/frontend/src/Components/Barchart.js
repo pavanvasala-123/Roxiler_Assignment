@@ -25,23 +25,7 @@ const Barchart = () => {
     setSelectedMonth(parseInt(event.target.value));
   };
 
-  const getColor = (priceRange) => {
-    // Define a color scale based on price range
-    const colors = [
-      '#ff6384', // Light Coral for low prices
-      '#36a2eb', // Light Blue for medium prices
-      '#ffce56', // Light Yellow for high prices
-    ];
-
-    // Assign a color based on price range (adjust thresholds as needed)
-    if (priceRange < 100) {
-      return colors[0];
-    } else if (priceRange < 200) {
-      return colors[1];
-    } else {
-      return colors[2];
-    }
-  };
+ 
 
   return (
     <div className="bar-chart-container">
