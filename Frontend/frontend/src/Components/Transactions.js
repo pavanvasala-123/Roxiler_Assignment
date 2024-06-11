@@ -12,11 +12,12 @@ const Transactions = () => {
     const fetchTransactions = async () => {
       try {
         const response = await fetch(
-          `https://roxiler-assignment-backend.onrender.com/transactions?page=${currentPage}&perPage=${perPage}&search=${searchTerm}&month=${selectedMonth}`
+          `https://roxiler-assignment-8.onrender.com/transactions?page=${currentPage}&perPage=${perPage}&search=${searchTerm}&month=${selectedMonth}`
         );
         if (response.ok) {
           const data = await response.json();
 
+          console.log(data)
           setTransactions(data);
         } else {
           console.error("Failed to fetch transactions");

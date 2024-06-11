@@ -79,8 +79,8 @@ app.get("/transactions", async (req, res) => {
   try {
     const [results] = await connection.query(
       `
-      SELECT * FROM products
-      WHERE 1=1 ${whereClause} ${monthCondition}
+      SELECT * FROM defaultdb
+      WHERE ${whereClause} ${monthCondition}
       LIMIT ?, ?
     `,
       [...params, offset, parseInt(perPage)] // Parse perPage as integer
@@ -96,10 +96,10 @@ app.get("/transactions", async (req, res) => {
 // Statistics API
 app.get("/statistics", async (req, res) => {
   const { month } = req.query;
-  // console.log(month);
+  console.log(month);
 
   try {
-    const [totalSaleAmount] = await connection.query(
+    const totalSaleAmount = await connection.query(
       `
       SELECT SUM(price) AS totalSaleAmount
       FROM defaultdb
@@ -108,7 +108,7 @@ app.get("/statistics", async (req, res) => {
       [month]
     );
 
-    const [totalSoldItems] = await connection.query(
+    const totalSoldItems = await connection.query(
       `
       SELECT COUNT(*) AS totalSoldItems
       FROM defaultdb
@@ -116,8 +116,9 @@ app.get("/statistics", async (req, res) => {
     `,
       [month]
     );
+    
 
-    const [totalNotSoldItems] = await connection.query(
+    const totalNotSoldItems = await connection.query(
       `
       SELECT COUNT(*) AS totalNotSoldItems
       FROM defaultdb
@@ -125,11 +126,12 @@ app.get("/statistics", async (req, res) => {
     `,
       [month]
     );
+    
 
     res.status(200).json({
-      totalSaleAmount: totalSaleAmount[0].totalSaleAmount || 0,
-      totalSoldItems: totalSoldItems[0].totalSoldItems || 0,
-      totalNotSoldItems: totalNotSoldItems[0].totalNotSoldItems || 0,
+      totalSaleAmount: totalSaleAmount || 0,
+      totalSoldItems: totalSoldItems || 0,
+      totalNotSoldItems: totalNotSoldItems || 0,
     });
   } catch (error) {
     console.error("Error fetching statistics:", error);
@@ -159,7 +161,7 @@ app.get("/bar-chart", async (req, res) => {
         END AS priceRange,
         COUNT(*) AS itemCount
       FROM defaultdb
-      WHERE MONTH(dateOfSale) = ?
+      WHERE MONTH(dateOfSale) = ? 
       GROUP BY priceRange
     `,
       [month]

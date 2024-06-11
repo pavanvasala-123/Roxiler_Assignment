@@ -4,12 +4,12 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip } from 'recharts';
 
 const Barchart = () => {
   const [data, setData] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState(1);
+  const [selectedMonth, setSelectedMonth] = useState('1');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`https://roxiler-assignment-backend.onrender.com/bar-chart?month=${selectedMonth}`);
+        const response = await fetch(`https://roxiler-assignment-8.onrender.com/bar-chart?month=${selectedMonth}`);
         const jsonData = await response.json();
         setData(jsonData);
       } catch (error) {

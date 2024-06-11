@@ -8,7 +8,8 @@ const Statistics = () => {
     const [selectedMonth,setSelectedMonth] = useState('1')
    useEffect(() => {
     const FetchStatistics = async() => {
-        const response = await axios.get(`https://roxiler-assignment-backend.onrender.com/statistics?&month=${selectedMonth}`)
+        const response = await axios.get(`https://roxiler-assignment-8.onrender.com/statistics?&month=${selectedMonth}`)
+        console.log(response.data)
         setData(response.data)
 
     }
